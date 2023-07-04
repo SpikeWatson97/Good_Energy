@@ -1,12 +1,12 @@
 import { LandingPage } from "../PageModels/LandingPage";
 import { AboutYouPage } from "../PageModels/AboutYouPage";
-import { SubmitPage } from "../PageModels/SubmitPage";
+import { SubmitFeedInTariffReadingPage } from "../PageModels/SubmitFeedInTariffReadingPage";
 import { ResultsPage } from "../PageModels/ResultsPage";
-import { ErrorMessageConstants } from "cypress/Constants/ErrorMessageConstants";
+import { ErrorMessageConstants } from "../Constants/ErrorMessageConstants";
 
 const landingPage: LandingPage = new LandingPage();
 const aboutYouPage: AboutYouPage = new AboutYouPage();
-const submitPage: SubmitPage = new SubmitPage();
+const submitPage: SubmitFeedInTariffReadingPage = new SubmitFeedInTariffReadingPage();
 const resultsPage: ResultsPage = new ResultsPage();
 
 beforeEach(() => {
@@ -22,23 +22,56 @@ it("Submit feed in tarrif reading and verify success", () =>
   resultsPage.SuccessMessageIsDisplayed();
 })
 
+describe("Validation tests", () => 
+{
 it("Invalid account number displays error message", () =>
 {
-  submitPage.CompleteSubmitForm("-1", "12", "1", "January", "2023", "1111");
+  submitPage.GeneratorAccountNumberInput().type("-1").type("{enter}");
   submitPage.AccountNumberErrorMessage().should('be.visible');
   submitPage.AccountNumberErrorMessage().should('have.text', ErrorMessageConstants.InvalidGeneratorAccountNumber);
 })
 
-it("No date entered displays error message", () => 
+it("Invalid meter serial number displays error message", () =>
 {
-  submitPage.CompleteSubmitFormWithNoDate("12345", "12", "1");
-  submitPage.DateOfReadingErrorMessage().should('be.visible');
-  submitPage.DateOfReadingErrorMessage().should('have.text', ErrorMessageConstants.NoDateErrorMessage)
+  submitPage.MeterSerialNumberInput().type("_").type("{enter}");
+  submitPage.MeterSerialNumberErrorMessage().should('be.visible');
+  submitPage.MeterSerialNumberErrorMessage().should('have.text', ErrorMessageConstants.InvalidMeterSerialNumber);
+})
+
+it("Invalid meter reading displays error message", () =>
+{
+  submitPage.MeterReadingInput().type("_").type("{enter}");
+  submitPage.MeterReadingErrorMessage().should('be.visible');
+  submitPage.MeterReadingErrorMessage().should('have.text', ErrorMessageConstants.EnterValidMeterReading)
+})
+
+//Causes 'no value' validation messages to appear for all fields
+beforeEach(() =>
+{
+  submitPage.SubmitButton().click();
+})
+
+it("No generator account number displays error message", () =>
+{
+  submitPage.AccountNumberErrorMessage().should('be.visible');
+  submitPage.AccountNumberErrorMessage().should('have.text', ErrorMessageConstants.NoGeneratorAccountNumber)
 })
 
 it("No meter serial number entered displays error message", () => 
 {
-  submitPage.CompleteSubmitFormWithNoMeterSerialNumber("12345","1", "January", "2023", "1111");
   submitPage.MeterSerialNumberErrorMessage().should('be.visible');
-  submitPage.MeterSerialNumberErrorMessage().should('have.text', ErrorMessageConstants.NoSerialNumberErrorMessage)
+  submitPage.MeterSerialNumberErrorMessage().should('have.text', ErrorMessageConstants.NoSerialNumber)
+})
+
+it("No date entered displays error message", () => 
+{
+  submitPage.DateOfReadingErrorMessage().should('be.visible');
+  submitPage.DateOfReadingErrorMessage().should('have.text', ErrorMessageConstants.NoDateEntered)
+})
+
+it("No meter reading displays error message", () =>
+{
+  submitPage.MeterReadingErrorMessage().should('be.visible');
+  submitPage.MeterReadingErrorMessage().should('have.text', ErrorMessageConstants.NoMeterReading)
+})
 })
