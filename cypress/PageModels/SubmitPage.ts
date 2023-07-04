@@ -14,30 +14,30 @@ export class SubmitPage
     public CompleteSubmitForm(accountNumber: string, meterSerialNumber: string, day: string, month: string, year: string,
      meterReading: string)
     {
-        this.GeneratorAccountNumberInput().type(accountNumber);
-        this.MeterSerialNumberInput().type(meterSerialNumber);
-        this.DayDateOfReadingDropdown().select(day.toString());
-        this.MonthDateOfReadingDropdown().select(month.toString());
-        this.YearDateOfReadingDropdown().select(year.toString());
-        this.MeterReadingInput().type(meterReading);
+        this.GeneratorAccountNumberInput().type(accountNumber).should('have.value', accountNumber);
+        this.MeterSerialNumberInput().type(meterSerialNumber).should('have.value', meterSerialNumber);
+        this.DayDateOfReadingDropdown().select(day.toString()).should('contain.text', day);
+        this.MonthDateOfReadingDropdown().select(month.toString()).should('contain.text', month);
+        this.YearDateOfReadingDropdown().select(year.toString()).should('contain.text', year);
+        this.MeterReadingInput().type(meterReading).should('have.value', meterReading);
         this.SubmitButton().click();
     }
 
     public CompleteSubmitFormWithNoDate(accountNumber: string, meterSerialNumber: string, meterReading: string)
        {
-           this.GeneratorAccountNumberInput().type(accountNumber);
-           this.MeterSerialNumberInput().type(meterSerialNumber);
-           this.MeterReadingInput().type(meterReading);
+           this.GeneratorAccountNumberInput().type(accountNumber).should('have.value', accountNumber);
+           this.MeterSerialNumberInput().type(meterSerialNumber).should('have.value', meterSerialNumber);
+           this.MeterReadingInput().type(meterReading).should('have.value', meterReading);
            this.SubmitButton().click();
        }
 
        public CompleteSubmitFormWithNoMeterSerialNumber(accountNumber: string, day: string, month: string, year: string, meterReading: string)
        {
-           this.GeneratorAccountNumberInput().type(accountNumber);
-           this.DayDateOfReadingDropdown().select(day.toString());
-           this.MonthDateOfReadingDropdown().select(month.toString());
-           this.YearDateOfReadingDropdown().select(year.toString());
-           this.MeterReadingInput().type(meterReading);
+           this.GeneratorAccountNumberInput().type(accountNumber).should('have.value', accountNumber);
+           this.DayDateOfReadingDropdown().select(day.toString()).should('contain.text', day);
+           this.MonthDateOfReadingDropdown().select(month.toString()).should('contain.text', month);
+           this.YearDateOfReadingDropdown().select(year.toString()).should('contain.text', year);
+           this.MeterReadingInput().type(meterReading).should('have.value', meterReading);
            this.SubmitButton().click();
        }
 }

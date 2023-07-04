@@ -7,9 +7,9 @@ export class AboutYouPage
 
     public CompleteAboutYouForm(name: string, email: string, postcode: string)
     {
-        this.NameInput().type(name).should('contain.value', name)
-        this.EmailInput().type(email).should('contain.value', email)
-        this.PostcodeInput().type(postcode).should('contain.value', postcode)
+        this.NameInput().type(name).should('have.value', name)
+        this.EmailInput().type(email).should('have.value', email)
+        this.PostcodeInput().type(postcode).should('have.value', postcode)
         this.NextButton().click();
     }
 }
