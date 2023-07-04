@@ -1,0 +1,16 @@
+{
+  "name": "goodenergyautomation",
+  "version": "1.0.0",
+  "description": "Good Energy Tests",
+  "main": "index.js",
+  "scripts": {
+    "open": "cypress open",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alex Watson",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^12.16.0",
+    "typescript": "^5.1.6"
+  }
+}
